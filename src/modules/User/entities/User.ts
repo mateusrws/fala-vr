@@ -10,12 +10,18 @@ export interface UserSchema{
 }
 
 export class User {
-    private _id;
-    private props;
+    private _id: string;
+    props: UserSchema;
 
-    constructor(props: UserSchema){
+    constructor(props: UserSchema, id?: string){
         this.props = props;
-        this._id = randomUUID();
+        this._id = id || randomUUID();
+    }
+
+    static reconstitute(props: UserSchema, user_id: string): User {
+        const user = new User({ ...props, password: '_placeholder_' }, user_id);
+        user.props.password = props.password;
+        return user;
     }
 
     get get_id() : string{
