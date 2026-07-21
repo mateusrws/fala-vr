@@ -1,9 +1,9 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Request } from "@nestjs/common";
-import { CreateUserUseCase } from "../../../../modules/User/useCases/createUser/createUserUseCase";
-import { GetUserUseCase } from "../../../../modules/User/useCases/getUser/getUserUseCase";
-import { UpdateUserUseCase } from "../../../../modules/User/useCases/updateUser/updateUserUseCase";
-import { DeleteUserUseCase } from "../../../../modules/User/useCases/deleteUser/deleteUserUseCase";
-import type { UserSchema } from "../../../../modules/User/entities/User";
+import type { UserSchema } from "../../../../modules/User/entities/User.js";
+import { CreateUserUseCase } from "../../../../modules/User/useCases/createUser/createUserUseCase.js";
+import { DeleteUserUseCase } from "../../../../modules/User/useCases/deleteUser/deleteUserUseCase.js";
+import { GetUserUseCase } from "../../../../modules/User/useCases/getUser/getUserUseCase.js";
+import { UpdateUserUseCase } from "../../../../modules/User/useCases/updateUser/updateUserUseCase.js";
 
     
 @Controller('user')

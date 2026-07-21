@@ -1,6 +1,6 @@
-import { UserSchema } from "../entities/User";
-import { User } from "../entities/User"
-import { Roles } from "../types/Roles";
+import { UserSchema, User } from "../entities/User.js"
+import { Roles } from "../types/Roles.js"
+
 
 type Override = Partial<UserSchema>
 

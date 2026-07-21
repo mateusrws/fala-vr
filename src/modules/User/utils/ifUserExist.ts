@@ -1,9 +1,10 @@
-import { userRepository } from "../repositories/userRepository";
+import { UserRepository } from "../repositories/userRepository.js";
 
 
-export function ifUserExistByEmail(userRepository: userRepository, email: string): Promise<boolean> {
+
+export function ifUserExistByEmail(userRepository: UserRepository, email: string): Promise<boolean> {
     return userRepository.getByEmail(email).then(user => !!user);
 }
-export function ifUserExistById(userRepository: userRepository, id: string): Promise<boolean> {
+export function ifUserExistById(userRepository: UserRepository, id: string): Promise<boolean> {
     return userRepository.getById(id).then(user => !!user);
 }

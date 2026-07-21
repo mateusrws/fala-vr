@@ -1,6 +1,7 @@
-import { Roles } from "../types/Roles";
+
 import { randomUUID } from "crypto";
 import { hashSync } from "bcrypt"
+import { Roles } from "../types/Roles.js";
 
 export interface UserSchema{ 
     name: string;

@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
-import { userRepository } from "../../repositories/userRepository";
+import { UserRepository } from "../../repositories/userRepository.js";
 
 @Injectable()
 export class GetUserUseCase{
-    constructor(private userRepository: userRepository){}
+    constructor(private userRepository: UserRepository){}
 
     async getAll(){
         return this.userRepository.getAll();

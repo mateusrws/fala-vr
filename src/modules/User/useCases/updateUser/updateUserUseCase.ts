@@ -1,11 +1,11 @@
 import { Injectable } from "@nestjs/common";
-import { userRepository } from "../../repositories/userRepository";
-import { User, UserSchema } from "../../entities/User";
-import { ifUserExistById } from "../../utils/ifUserExist";
+import { UserSchema, User } from "../../entities/User.js";
+import { UserRepository } from "../../repositories/userRepository.js";
+import { ifUserExistById } from "../../utils/ifUserExist.js";
 
 @Injectable()
 export class UpdateUserUseCase{
-    constructor(private userRepository: userRepository){}
+    constructor(private userRepository: UserRepository){}
 
     async execute(user_id: string, user_data: UserSchema){
         const user = new User(user_data, user_id);

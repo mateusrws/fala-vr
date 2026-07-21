@@ -1,8 +1,10 @@
-import { ResponseUserDto } from "src/infra/http/modules/user/dto/ResponseUserDto";
-import { User, UserSchema } from "../entities/User";
-import { userRepository } from "./userRepository";
+import { User as Raw } from "@prisma/client"
+import { ResponseUserDto } from "../../../infra/http/modules/user/dto/ResponseUserDto.js"
+import { UserSchema, User } from "../entities/User.js"
+import { UserRepository } from "./userRepository.js"
 
-export class mockUserRepository implements userRepository {
+
+export class mockUserRepository implements UserRepository {
     public users: User[] = []
 
     async create(userRaw: UserSchema): Promise<void> {
