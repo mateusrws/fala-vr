@@ -1,5 +1,5 @@
 import { IsEmail, IsNotEmpty, IsString } from "class-validator";
-import { Roles } from "../../../../../modules/User/types/Roles.js";
+import { Role } from "../../../../../modules/User/types/Roles.enum.js";
 
 
 export class PatternUserRequestDto {
@@ -18,5 +18,5 @@ export class PatternUserRequestDto {
 
   @IsString()
   @IsNotEmpty()
-  role!: Roles;
+  role!: Role;
 }

@@ -1,13 +1,13 @@
 
 import { randomUUID } from "crypto";
 import { hashSync } from "bcrypt"
-import { Roles } from "../types/Roles.js";
+import { Role } from "../types/Roles.enum.js";
 
 export interface UserSchema{ 
     name: string;
     email: string;
     password: string;
-    role: Roles
+    role: Role
 }
 
 export class User {
@@ -52,11 +52,11 @@ export class User {
         this.props.password = hashSync(text, 10);
     }
 
-    get get_role() : Roles{
+    get get_role() : Role{
         return this.props.role;
     }
 
-    set set_role(role: Roles){
+    set set_role(role: Role){
         this.props.role = role;
     }
 }

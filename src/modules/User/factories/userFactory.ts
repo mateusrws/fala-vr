@@ -1,5 +1,5 @@
 import { UserSchema, User } from "../entities/User.js"
-import { Roles } from "../types/Roles.js"
+import { Role } from "../types/Roles.enum.js"
 
 
 type Override = Partial<UserSchema>
@@ -10,7 +10,7 @@ export const makeUser = (override: Override = {}) => {
         name: "John Doe",
         email: "jonhDoe@gmail.com",
         password: "123456",
-        role: Roles.USER
+        role: Role.USER
     }
     return new User({
         ...data
