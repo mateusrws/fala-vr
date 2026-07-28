@@ -1,7 +1,5 @@
-import { User } from "../../../../../modules/User/entities/User.js";
+import { User } from '../../../../../modules/User/entities/User.js';
 
-
-
-export class AuthResquestModel extends Request{
-    user!: User;
+export class AuthResquestModel extends Request {
+  user!: User;
 }

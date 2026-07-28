@@ -1,5 +1,10 @@
 // owner.guard.ts
-import { Injectable, CanActivate, ExecutionContext, ForbiddenException } from '@nestjs/common';
+import {
+  Injectable,
+  CanActivate,
+  ExecutionContext,
+  ForbiddenException,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { IS_OWNER_KEY } from './is-owner.decorator.js';
 
@@ -8,13 +13,13 @@ export class OwnerGuard implements CanActivate {
   constructor(private reflector: Reflector) {}
 
   canActivate(context: ExecutionContext): boolean {
-    const isOwnerRequired = this.reflector.getAllAndOverride<boolean>(IS_OWNER_KEY, [
-      context.getHandler(),
-      context.getClass(),
-    ]);
+    const isOwnerRequired = this.reflector.getAllAndOverride<boolean>(
+      IS_OWNER_KEY,
+      [context.getHandler(), context.getClass()],
+    );
 
     if (!isOwnerRequired) {
-      return true; 
+      return true;
     }
 
     const request = context.switchToHttp().getRequest();
@@ -33,7 +38,9 @@ export class OwnerGuard implements CanActivate {
     const resourceId = String(params.id);
 
     if (currentUserId !== resourceId) {
-      throw new ForbiddenException('Você não tem permissão para alterar o recurso de outro usuário.');
+      throw new ForbiddenException(
+        'Você não tem permissão para alterar o recurso de outro usuário.',
+      );
     }
 
     return true;

@@ -7,11 +7,11 @@ const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
-    constructor() {
-        super({ adapter });
-    }
+  constructor() {
+    super({ adapter });
+  }
 
-    async onModuleInit() {
-        await this.$connect();
-    }
+  async onModuleInit() {
+    await this.$connect();
+  }
 }

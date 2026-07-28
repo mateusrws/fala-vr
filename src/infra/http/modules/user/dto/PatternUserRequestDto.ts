@@ -1,6 +1,5 @@
-import { IsEmail, IsNotEmpty, IsString } from "class-validator";
-import { Role } from "../../../../../modules/User/types/Roles.enum.js";
-
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { Role } from '../../../../../modules/User/types/Roles.enum.js';
 
 export class PatternUserRequestDto {
   @IsString()
@@ -14,9 +13,12 @@ export class PatternUserRequestDto {
 
   @IsString()
   @IsNotEmpty()
-  password!: string
+  password!: string;
 
   @IsString()
   @IsNotEmpty()
   role!: Role;
+
+  @IsString()
+  img_url!: string;
 }

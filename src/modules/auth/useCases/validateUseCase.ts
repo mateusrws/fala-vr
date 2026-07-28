@@ -1,29 +1,40 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
-import { compare } from "bcrypt";
-import { UserRepository } from "../../User/repositories/userRepository.js";
-import { PrismaUserMapper } from "../../../infra/database/prisma/mappers/PrismaUserMapper.js";
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { compare } from 'bcrypt';
+import { UserRepository } from '../../User/repositories/userRepository.js';
+import { User as DomainUser } from '../../User/entities/User.js';
+import { Role } from '../../User/types/Roles.enum.js';
 
 interface ValidateUserRequest {
-    email: string,
-    password: string
+  email: string;
+  password: string;
 }
 
 @Injectable()
 export class ValidateUserUseCase {
-    constructor(private userRepository: UserRepository) { }
+  constructor(private userRepository: UserRepository) {}
 
-    async execute({ email, password }: ValidateUserRequest) {
+  async execute({ email, password }: ValidateUserRequest) {
+    const userRaw = await this.userRepository.getByEmail(email);
 
-        const userRaw = await this.userRepository.getByEmail(email)
+    if (!userRaw) throw new UnauthorizedException('Email ou senha incorretos');
 
-        const user = PrismaUserMapper.toDomainOne(userRaw)
+    const user = new DomainUser(
+      {
+        name: userRaw.name,
+        email: userRaw.email,
+        password: userRaw.password ?? '',
+        img_url: userRaw.img_url ?? '',
+        role: userRaw.role as Role,
+        createdAt: new Date(),
+      },
+      userRaw.id,
+    );
 
-        if (!user) throw new UnauthorizedException("Email ou senha incorretos")
+    const isMatchPass = await compare(password, user.get_password);
 
-        const isMatchPass = await compare(password, user.get_password)
+    if (!isMatchPass)
+      throw new UnauthorizedException('Email ou senha incorretos');
 
-        if (!isMatchPass) throw new UnauthorizedException("Email ou senha incorretos")
-
-        return user;
-    }
+    return user;
+  }
 }

@@ -1,29 +1,25 @@
-import { IsString, IsNotEmpty, IsDate, IsInt } from "class-validator";
+import { IsString, IsNotEmpty, IsDate, IsInt } from 'class-validator';
 
+export class PatternPostRequestDto {
+  @IsString()
+  @IsNotEmpty()
+  title!: string;
 
-export class PatternPostRequestDto{
+  @IsString()
+  @IsNotEmpty()
+  content!: string;
 
-    @IsString()
-    @IsNotEmpty()
-    title!: string;
+  @IsString()
+  @IsNotEmpty()
+  authorId!: string;
 
-    @IsString()
-    @IsNotEmpty()
-    content!: string;
+  @IsInt()
+  @IsNotEmpty()
+  uppoints!: number;
 
-    @IsString()
-    @IsNotEmpty()
-    authorId!: string;
+  @IsInt()
+  @IsNotEmpty()
+  downpoints!: number;
 
-    @IsInt()
-    @IsNotEmpty()
-    uppoints!: number;
-
-    @IsInt()
-    @IsNotEmpty()
-    downpoints!: number;
-
-    @IsString()
-    @IsNotEmpty()
-    father_post_id!: string;
+  father_post_id!: string;
 }
