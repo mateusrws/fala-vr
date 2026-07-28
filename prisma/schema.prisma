@@ -6,7 +6,7 @@
 
 generator client {
   provider     = "prisma-client"
-  output       = "../src/generated/prisma"
+  output   = "../src/generated"
   moduleFormat = "esm"
 }
 
@@ -20,7 +20,7 @@ model User {
     email           String   @unique
     password        String
     role            Role
-    img_url         String
+    img_url         String?
     createdAt       DateTime @default(now())
     posts           Post[]
 }
@@ -38,6 +38,7 @@ model Post {
     createdAt       DateTime @default(now())
     uppoints        Int      @default(0)
     downpoints      Int      @default(0)
+    img_url         String?
     father_post_id  String?  @map("father_post_id")
     father_post     Post?    @relation("PostToPost", fields:         [father_post_id], references: [id])
     author          User     @relation(fields: [authorId], references: [id])

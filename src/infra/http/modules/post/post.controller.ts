@@ -47,7 +47,7 @@ export class PostController {
 
   @IsOwnerPost()
   @Get('/:post_id')
-  async getUser(@Param('post_id') post_id: string) {
+  async getPost(@Param('post_id') post_id: string) {
     return this.getPostUseCase.getById(post_id);
   }
 

@@ -1,6 +1,6 @@
 
 import { User as DomainUser, type UserSchema } from '../../../../modules/User/entities/User.js';
-import { Prisma } from '../../../../generated/prisma/client.js';
+import { Prisma } from '../../../../generated/client.js';
 
 export class PrismaUserMapper {
   static toPrisma(user: DomainUser | UserSchema): Prisma.UserCreateInput {

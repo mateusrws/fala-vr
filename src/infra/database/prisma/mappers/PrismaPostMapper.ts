@@ -1,4 +1,4 @@
-import { Post as PostRaw } from '../../../../generated/prisma/client';
+import { Post as PostRaw } from "../../../../generated/client.js";
 import { Post, PostSchema } from '../../../../modules/Post/entities/Post.js';
 import { PatternPostResponseDto } from '../../../http/modules/post/dto/PatternPostResponseDto.js';
 
@@ -11,6 +11,7 @@ export class PrismaPostMapper {
       uppoints: post.uppoints,
       downpoints: post.downpoints,
       father_post_id: post.father_post_id,
+      img_url: post.img_url
     });
     return {
       id: data.get_id,
@@ -21,6 +22,7 @@ export class PrismaPostMapper {
       downpoints: data.get_downpoints,
       father_post_id: data.get_father_post_id,
       createdAt: data.get_createdAt!,
+      img_url: data.get_img_url!
     };
   }
   static toDomain(posts: PostRaw[]): Post[] {
