@@ -1,10 +1,13 @@
+import { BadRequestException } from '@nestjs/common';
 import { ResponseUserDto } from '../../../infra/http/modules/user/dto/ResponseUserDto.js';
 import { UserSchema, User } from '../entities/User.js';
 import { UserRepository } from './userRepository.js';
 
 export class mockUserRepository implements UserRepository {
-  getCompleteUserByEmail(user_email: string): Promise<User | null> {
-    throw new Error('Method not implemented.');
+  async getCompleteUserByEmail(user_email: string): Promise<User | null> {
+    const user = this.users.find((u) => u.get_email === user_email);
+    if (!user) return null;
+    return user;
   }
   public users: User[] = [];
 
@@ -41,7 +44,7 @@ export class mockUserRepository implements UserRepository {
   }
   async getByEmail(email: string): Promise<ResponseUserDto | null> {
     const user = this.users.find((u) => u.get_email === email);
-    if (!user) throw new Error('User not found');
+    if (!user) return null;
     return {
       id: user.get_id,
       name: user.get_name,
@@ -58,7 +61,7 @@ export class mockUserRepository implements UserRepository {
     }
   }
   async delete(id: string): Promise<void> {
-    if (!id) throw new Error('User ID is required for delete');
+    if (!id) throw new BadRequestException('User ID is required for delete');
     this.users = this.users.filter((user) => user.get_id !== id);
   }
 }

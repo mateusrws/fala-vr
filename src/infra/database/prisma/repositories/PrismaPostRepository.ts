@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PostRepository } from '../../../../modules/Post/repositories/postRepository.js';
 import { Post, PostSchema } from '../../../../modules/Post/entities/Post.js';
 import { PrismaService } from '../prisma.service.js';
@@ -17,7 +21,7 @@ export class PrismaPostRepository implements PostRepository {
       where: { father_post_id },
     });
 
-    if (!postRaw) throw new Error('Post not found');
+    if (!postRaw) throw new NotFoundException('Post not found');
 
     const posts = PrismaPostMapper.toDomain(postRaw);
 
@@ -29,7 +33,7 @@ export class PrismaPostRepository implements PostRepository {
   ): Promise<PatternPostResponseDto[] | null> {
     const postRaw = await this.prisma.post.findMany({ where: { authorId } });
 
-    if (!postRaw) throw new Error('Post not found');
+    if (!postRaw) throw new NotFoundException('Post not found');
 
     const posts = PrismaPostMapper.toDomain(postRaw);
 
@@ -82,16 +86,16 @@ export class PrismaPostRepository implements PostRepository {
   async getById(id: string): Promise<Post | null> {
     const postRaw = await this.prisma.post.findUnique({ where: { id } });
 
-    if (!postRaw) throw new Error('Post not found');
+    if (!postRaw) throw new NotFoundException('Post not found');
 
     const post = PrismaPostMapper.toDomainOne(postRaw);
     return post;
   }
 
   async update(post: Post): Promise<void> {
-    if (!post.get_id) throw new Error('Post ID is required for update');
+    if (!post.get_id) throw new BadRequestException('Post ID is required for update');
 
-    if (!post) throw new Error('Post not found');
+    if (!post) throw new BadRequestException('Post is required');
 
     const postRaw = PrismaPostMapper.toPrisma(post.get_props)
 
@@ -102,7 +106,7 @@ export class PrismaPostRepository implements PostRepository {
   }
 
   async delete(id: string): Promise<void> {
-    if (!id) throw new Error('Post ID is required for delete');
+    if (!id) throw new BadRequestException('Post ID is required for delete');
 
     await this.prisma.post.delete({ where: { id } });
   }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserPayload } from '../models/userPayload.js';
 import { UserRepository } from '../../User/repositories/userRepository.js';
@@ -15,12 +15,8 @@ export class SignInUseCase {
 
     const user = await this.userRepository.getCompleteUserByEmail(email)
 
-    console.log(" A segui aparece o user do email: ", email)
-    console.log(user)
-
-    
     if (!user) {
-      throw new Error("Not found User");
+      throw new UnauthorizedException('Usuário não encontrado');
     }
 
 
