@@ -1,5 +1,7 @@
 import { FormEvent, useState } from 'react';
 import { useAuth } from './auth/AuthContext';
+import { PostComposer } from './features/posts/PostComposer';
+import { PostThread } from './features/posts/PostThread';
 import { ApiError, Post, api } from './lib/api';
 
 export default function App() {
@@ -84,14 +86,17 @@ export default function App() {
           <button type="button" onClick={handleLoadPosts}>Carregar posts</button>
         </div>
         <p className="status">{message}</p>
-        <ul className="post-list">
-          {posts.map((post) => (
-            <li key={post.id}>
-              <strong>{post.title}</strong>
-              <span>{post.content}</span>
-            </li>
-          ))}
-        </ul>
+        {accessToken && userId ? (
+          <PostComposer accessToken={accessToken} authorId={userId} onCreated={handleLoadPosts} />
+        ) : null}
+        {accessToken && userId ? (
+          <PostThread
+            accessToken={accessToken}
+            authorId={userId}
+            posts={posts}
+            onReplyCreated={handleLoadPosts}
+          />
+        ) : null}
       </section>
     </main>
   );
