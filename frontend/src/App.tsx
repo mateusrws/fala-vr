@@ -1,10 +1,11 @@
 import { FormEvent, useState } from 'react';
+import { useAuth } from './auth/AuthContext';
 import { ApiError, Post, api } from './lib/api';
 
 export default function App() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [accessToken, setAccessToken] = useState('');
+  const { accessToken, userId, signInWithToken, signOut } = useAuth();
   const [posts, setPosts] = useState<Post[]>([]);
   const [message, setMessage] = useState('Informe suas credenciais para acessar as rotas protegidas.');
 
@@ -14,7 +15,7 @@ export default function App() {
 
     try {
       const response = await api.signIn({ email, password });
-      setAccessToken(response.access_token);
+      signInWithToken(response.access_token);
       setMessage('Login realizado. O token será enviado como Bearer nas chamadas protegidas.');
     } catch (error) {
       setMessage(getErrorMessage(error));
@@ -67,6 +68,14 @@ export default function App() {
           </label>
           <button type="submit">Entrar</button>
         </form>
+        {accessToken ? (
+          <div className="auth-details">
+            <span>Token carregado{userId ? ` para o usuário ${userId}` : ''}.</span>
+            <button type="button" onClick={signOut}>
+              Sair
+            </button>
+          </div>
+        ) : null}
       </section>
 
       <section className="panel">

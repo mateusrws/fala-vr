@@ -160,4 +160,26 @@ export const api = {
       accessToken,
     });
   },
+
+  uploadUserProfileImage(file: File, accessToken: string) {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return request<User>('/user', {
+      method: 'PATCH',
+      body: formData,
+      accessToken,
+    });
+  },
+
+  uploadPostImage(postId: string, file: File, accessToken: string) {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return request<Post>(`/posts/${postId}`, {
+      method: 'PATCH',
+      body: formData,
+      accessToken,
+    });
+  },
 };
