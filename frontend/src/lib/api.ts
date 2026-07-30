@@ -28,7 +28,7 @@ export type PostPayload = {
   authorId: string;
   uppoints: number;
   downpoints: number;
-  father_post_id: string | null;
+  father_post_id?: string | null;
 };
 
 export type Post = PostPayload & {
